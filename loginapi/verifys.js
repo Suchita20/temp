@@ -1,0 +1,56 @@
+const jwt =require('jsonwebtoken');
+const payload={
+    message:'welcome'
+}
+const private_key=`
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEApyAmb9lbb3+5j99l7Iawxzvjgsx9ycWOCO1ys05Ydj0UTuM8
+BheC52N2wDG5KPW7oBo5KIiQ7IlceGC+fyR/WJeuT7aa4XOnKo4KZp7PbCAf1Buh
+oW+pS+Yt+UXpM1Mg1njQeKCRbiwXq4/H7wJlTrWUo8zF00ZWkOZRMdwNB4i+zHvN
+nj1hXx+jQ1EGkq4QYhxyq47G2uwLjtw2LOHy3iF+FJ2EKSNub6ncLnOid6+zO7qU
+NOPXFBBefT6Pv7kZECPhY2To5cMUKEORJSlCs530NCHZpMDkYXD10ul760ZudV60
+hhEhVv7ZIdpsxq2zzE9n6H19vplO3NS/jpos8wIDAQABAoIBAA7Pmphu+tt2xksp
+0S6VATWm6RK+bKdlCqFf6bpaRxyzbQlQuhEQJFm9RtjhjzdCD86whEBDWhScV8WT
+TU6XPXHsf1YxKKiyRy5OSD2v9VHvxuJVUI2uB6LiU1C0EWarB036hv8pu7m3zqE1
+rNJRtAi1ruaVTzLaGPHed3OjvMPeBYn0GNjziNTEM5qW3d3oZ636xvNYovY5b8lt
+F3lB/7gLoKYqRMz8ScGXboBox/qP+Fyyahab51mr1j1Hzv1Br3i7YaNaxBgDyYzr
+Qet2couFcQxSt7pDVOrseIjAepZWitbWD0JKsKhHaz0GuVLifWPRIgNg50uXswx3
+VAGhLgECgYEA7Qlzfpd75HCzpw71ceZwkXpLC6jRPqUCRuCgQang1OxKWKm+C6Go
+soxcIUkg1qKcumiCjbJBgONHCfO8D6uduSEaK68XhvvkdPVVM3v87u13pOQg9goH
+g21v+Xwj+aHFIbDuRHRP80wSDdOL32CmlKoazQ9Fhc+J3rU68LAZbAMCgYEAtH7n
+vpVfYcQ9Eh69PE7fdAutN9e9QQg7T3xM11E4b08i7Z/9UALY8CsvZqCYPqNbe3C3
+X61jqSmX97/mGk0zfzXJyBiaoUMWRDFPCLyNCDopSC6xBOIrqatNtCzD84eEEaSp
+/5GrMAcK9tWgFGFGlKE2dq7GqRoft+esH5OFAFECgYBXrt5VXs4KtBIQ4zyyNI9B
+kV5/YqR8queLtn4xrBiqSvo5kBjoDpXr7nYKLhYCr8aQQibBKcaHWgumR84yccZ3
+fCJFNJDccwOQrEwnLl9jNt7CVU1IFm+vE2WPgXeBWXElxGBvXCNTGbm3+aBNMmCM
+r9wYLOUH2bzjcGDsNghBZwKBgQCLh/tQyppkstZfNqIlh/eX9xreK4ojRuDKzpV8
+ck5FRhEDT4X8n2bjKw9Gr+lhqtkisP0hGqILeJsBLDkOphWkRomJhPOsrHb/Gns1
+jsUb0hJtuaKg2tLUJBg6q8yDa4R+OyQr7IlA5IDmVjic6KIubf3ze6MZwJc6jP7z
+ng/YMQKBgBac/30u0mRvYlvKoqjPFFl95CNSc5qoAAMRkE+ASCALxURiJ1uz/6aM
+YJvV42tbJPJHsDoj9RIRsSNkgwaMQbP0iFTG9S/NpnE74g8nJ2H2aJbodt2/d7JE
++2BYmvT2Eh3wqhPF4kZ4KWrq3JzSYk73d3mqADMjE6tEcKHgZ2ER
+-----END RSA PRIVATE KEY-----`
+
+const signed =jwt.sign(payload,private_key,{
+    algorithm:'RS384',
+    expiresIn:'1h'
+})
+
+console.log(signed);
+
+const public_key=`-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApyAmb9lbb3+5j99l7Iaw
+xzvjgsx9ycWOCO1ys05Ydj0UTuM8BheC52N2wDG5KPW7oBo5KIiQ7IlceGC+fyR/
+WJeuT7aa4XOnKo4KZp7PbCAf1BuhoW+pS+Yt+UXpM1Mg1njQeKCRbiwXq4/H7wJl
+TrWUo8zF00ZWkOZRMdwNB4i+zHvNnj1hXx+jQ1EGkq4QYhxyq47G2uwLjtw2LOHy
+3iF+FJ2EKSNub6ncLnOid6+zO7qUNOPXFBBefT6Pv7kZECPhY2To5cMUKEORJSlC
+s530NCHZpMDkYXD10ul760ZudV60hhEhVv7ZIdpsxq2zzE9n6H19vplO3NS/jpos
+8wIDAQAB
+-----END PUBLIC KEY-----`
+
+const decode =jwt.verify(signed,public_key,{
+    algorithm:'RS384'
+})
+
+console.log(decode)
+   
