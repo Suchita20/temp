@@ -1,0 +1,27 @@
+{
+  "name": "pgcrud",
+  "version": "1.0.0",
+  "main": "crud.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "confiq": "0.0.3",
+    "express": "^4.17.2",
+    "fs": "0.0.1-security",
+    "init": "^0.1.2",
+    "joi": "^17.6.0",
+    "json-parser": "^3.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "node-rsa": "^1.1.1",
+    "pg": "^8.7.3",
+    "rss": "^1.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
