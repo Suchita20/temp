@@ -1,4 +1,11 @@
 const {Client}=require('pg');
+
+const Role={
+    Admin:'admin',
+    SuperAdmin:'superadmin',
+    User:'user'
+}
+
 const client =new Client({
     host:"localhost",
     user:"users",
@@ -6,4 +13,8 @@ const client =new Client({
     password:"root",
     database:"users"
 })
-module.exports=client
+module.exports={
+    client,
+    Role
+}
+

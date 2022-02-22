@@ -43,7 +43,7 @@ try{
         {
             console.log(decode)
             res.json({
-                message:"authorize user",
+                message:"loged in",
                 decode
             })
             //res.status(200).send('authorize user')

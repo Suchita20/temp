@@ -1,6 +1,10 @@
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
-const client = require('./db.js');
+//const client = require('./db.js');
+//const acc =require('./access')
+const{validates,userrole}=require('./access')
+
+const {client,Role} = require('./db.js');
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
@@ -23,11 +27,16 @@ const config =require('confiq');
 const base64url =require('base64url');
 const signaturefunction =crypto.createSign('RSA-SHA256');
 const multer =require('multer')
-const author=require('./very')
-const user1 =require('./tokens')
-const admin =require('./admin')
+
+//const ar=require('./a')
+
+ 
+
+
 
 const verifyfunction =crypto.createVerify('RSA-SHA256');
+
+//const {author,authrole}=require('./authenticate')
 
 //const private_key =cert;
 //const public_key =fs;
@@ -54,6 +63,8 @@ const payload={
     iss:"memorres digital pvt ltd",
     exp:moment().add(240,'minute').unix(),
     iat:moment(date).unix(),
+  //role:client.role
+   // role:["role:admin","role:superadmin"]
     
 }		
 	
@@ -184,14 +195,25 @@ app.post('/api/login',async (req, res, result) => {
                     console.log(password)
                     console.log(result);
                     if (result === true) {
-                        payload.role=user[0].role;
+                        let tokenpayload={
+                            nbf:moment(date).unix(),
+                            sub:"memorres digital pvt ltd",
+                            iss:"memorres digital pvt ltd",
+                            exp:moment().add(240,'minute').unix(),
+                            iat:moment(date).unix()
+
+                        }
+                        tokenpayload.role=user[0].role;
+                        tokenpayload.email=user[0].email;
+
+
                        // payload.email=user[0].email;
 						
                         const token = jwt.sign(
                             //payload,cert, header:{"alg": "RS256"}
                             
 							
-                           payload,prvt_key,
+                            tokenpayload,prvt_key,
                                 { algorithm: 'RS384',header}
                               
                     );
@@ -272,7 +294,7 @@ app.post('/loged',auth,(err,res)=>
     console.log("all done")
 
 })/** */
-app.get('/api/logs',author,(err,res)=>
+/*app.get('/api/logs',auth,(err,res)=>
 {
 	if(err)
 	{
@@ -287,35 +309,20 @@ app.get('/api/logs',author,(err,res)=>
 //-------------------------------------------------------------------------
 //---------------------------------------------------------------------
 
-app.get('/api/admin',admin,(req, res) =>{
-    const user =req.body
-    
-        client.query("SELECT * FROM login WHERE role = 'admin' or role = 'user'", function (err, result) {
-          if (err) throw err;
-          res.send(result.rows)
-        });
-      });
-    client.end;
+/*app.get('/api/admin',userrole(Role.Admin),userrole(Role.User),(req,res,err)=>
+{
+    res.send(err.message)
+})
 
-app.get('/api/user',user1,(req, res) =>{
-        const user =req.body
-        
-            client.query("SELECT * FROM login WHERE  role = 'user'", function (err, result) {
-              if (err) throw err;
-              res.send(result.rows)
-            });
-          });
-        client.end;    
+app.get('/api/superadmin',userrole(Role.Admin)||userrole(Role.User)||userrole(Role.SuperAdmin),(req,res)=>
+{
+    res.send("superadmin")
+})
 
-app.get('/api/superadmin',author, (req, res) =>{
-    const user =req.body
-                
-    client.query("SELECT * FROM login WHERE  role = 'user' or role ='admin' or role ='superadmin'", function (err, result) {
-        if (err) throw err;
-        res.send(result.rows)
-        });
-        });
-                client.end;            
+app.get('/api/user',validates,(req,res)=>
+{
+    res.send("user")
+})/** */
 
 app.listen(3000, () => {
     
